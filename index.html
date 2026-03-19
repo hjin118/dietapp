@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다이어트 기록 앱</title>
+    <meta name="description" content="다이어트 기록 앱 - 체중, 식사, 운동, 사진 기록">
+    <meta name="theme-color" content="#667eea">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
+    <button id="settingsBtn" class="settings-btn">⚙️</button>
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <button id="prevMonth">&lt;</button>
+            <h2 id="currentMonth"></h2>
+            <button id="nextMonth">&gt;</button>
+        </div>
+        <div class="calendar-days">
+            <div class="day-name">일</div>
+            <div class="day-name">월</div>
+            <div class="day-name">화</div>
+            <div class="day-name">수</div>
+            <div class="day-name">목</div>
+            <div class="day-name">금</div>
+            <div class="day-name">토</div>
+        </div>
+        <div id="calendarGrid" class="calendar-grid"></div>
+    </div>
+
+    <button id="toggleGraphBtn" class="toggle-graph-btn">📊 체중 그래프</button>
+
+    <div id="graphContainer" class="graph-container">
+        <h3>체중 변화 (최근 30일)</h3>
+        <canvas id="weightGraph"></canvas>
+    </div>
+
+    <div id="selectedDateInfo" class="selected-date-info"></div>
+
+    <div id="recordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalDate">날짜: 2026-03-10</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>체중 (kg)</label>
+                    <input type="number" id="weightInput" step="0.1" placeholder="예: 65.5">
+                </div>
+                <div class="form-group">
+                    <label>식사 기록</label>
+                    <textarea id="mealsInput" rows="3" placeholder="아침, 점심, 저녁..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>운동 기록</label>
+                    <textarea id="exerciseInput" rows="3" placeholder="종류, 시간, 강도..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>사진 기록</label>
+                    <input type="file" id="photoInput" accept="image/*">
+                    <div id="photoPreview" class="photo-preview"></div>
+                </div>
+                <button id="saveBtn" class="save-btn">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚙️ 설정</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <div class="settings-section-title">📥 데이터 내보내기</div>
+                    <div class="settings-btn-group">
+                        <button id="exportJsonBtn" class="settings-action-btn">JSON 내보내기</button>
+                        <button id="exportMarkdownBtn" class="settings-action-btn">Markdown 내보내기</button>
+                    </div>
+                    <p class="backup-info">모든 기록을 파일로 다운로드합니다.</p>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-section-title">📤 데이터 가져오기</div>
+                    <div class="form-group">
+                        <input type="file" id="importInput" accept=".json">
+                    </div>
+                    <p class="backup-info">기존 데이터를 덮어씁니다. 백업 후 진행하세요.</p>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-section-title">🗑️ 데이터 초기화</div>
+                    <button id="clearDataBtn" class="settings-action-btn" style="background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);">모든 데이터 삭제</button>
+                    <p class="backup-info">모든 기록이 영구적으로 삭제됩니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="calendar.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('ServiceWorker 등록 성공:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('ServiceWorker 등록 실패:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
+
+    <script src="calendar.js"></script>
+</body>
+</html>
